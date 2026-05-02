@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+    <link href="./wwwroot/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./wwwroot/css/bootstrap-icons.min.css">
+    <script src="./wwwroot/js/jquery-4.0.0.min.js"></script>
+    <script src="./wwwroot/js/script.js"></script>
+  </head>
+  <body>
+
+    <!-- HEADER -->
+    <header>
+      <div class="px-3 py-2 text-bg-primary border-bottom">
+        <div class="container d-flex justify-content-between">
+          <h5 class="text-white">Sistema Biblioteca</h5>
+          <a class="text-white" href="logout.php">Salir</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <!-- MENU LATERAL -->
+        <aside class="col-3 bg-light vh-100 p-3">
+          <h5>Menú</h5>
+          <button class="btn btn-primary w-100 mb-2" onclick="cargar('autor.html')">
+            Alta Autor
+          </button>
+
+          <button class="btn btn-success w-100 mb-2" onclick="cargar('libro.html')">
+            Alta Libro
+          </button>
+
+          <button class="btn btn-warning w-100 mb-2" onclick="cargar('prestamo.html')">
+            Préstamo
+          </button>
+        </aside>
+
+        <!-- CONTENIDO -->
+        <main class="col-9 p-4">
+          <div id="article">
+            <h3>Bienvenido</h3>
+            <p>Selecciona una opción del menú</p>
+          </div>
+        </main>
+
+      </div>
+    </div>
+
+  </body>
+</html>

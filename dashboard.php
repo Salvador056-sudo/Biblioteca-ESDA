@@ -10,6 +10,31 @@ if (!isset($_SESSION['id_usuario'])) {
   }
 }
 
+// Obtener datos del usuario (ajusta según tu tabla de usuarios)
+$nombre_usuario = ''; // Inicializar variable
+if (isset($_SESSION['id_usuario'])) {
+    // Conexión a BD (asegúrate de tener tu conexión incluida)
+    // include 'conexion.php'; // Si tienes archivo de conexión
+    
+    // O si ya tienes la conexión en este archivo, asegúrate de tenerla
+    // Ejemplo genérico (ajusta según tu estructura)
+    /*
+    $sql = "SELECT nombre FROM usuarios WHERE id = " . $_SESSION['id_usuario'];
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $nombre_usuario = $row['nombre'];
+    }
+    */
+    
+    // Si solo tienes guardado el nombre en sesión, usa:
+    if (isset($_SESSION['nombre_usuario'])) {
+        $nombre_usuario = $_SESSION['nombre_usuario'];
+    } else {
+        // Si no tienes el nombre en sesión, usa solo el ID
+        $nombre_usuario = "Usuario ID: " . $_SESSION['id_usuario'];
+    }
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -29,7 +54,10 @@ if (!isset($_SESSION['id_usuario'])) {
   <div class="px-3 py-2 text-bg-primary border-bottom">
     <div class="container d-flex justify-content-between">
       <h5 class="text-white">Sistema Biblioteca</h5>
-      <a class="text-white" href="logout.php">Salir</a>
+      <div>
+        <span class="text-white me-3">Bienvenido, <?php echo htmlspecialchars($nombre_usuario); ?></span>
+        <a class="text-white" href="logout.php">Salir</a>
+      </div>
     </div>
   </div>
 </header>
@@ -65,7 +93,7 @@ if (!isset($_SESSION['id_usuario'])) {
     <!-- CONTENIDO -->
     <main class="col-9 p-4">
       <div id="article">
-        <h4>Bienvenido</h4>
+        <h4>Bienvenido, <?php echo htmlspecialchars($nombre_usuario); ?></h4>
         <p>Selecciona una opción del menú</p>
       </div>
     </main>
@@ -76,4 +104,3 @@ if (!isset($_SESSION['id_usuario'])) {
 <script src="./wwwroot/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-

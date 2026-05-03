@@ -23,29 +23,32 @@ require_once 'db.php'; // Traemos el código del otro archivo
 	
 
         // Ejecutamos pasando los datos en un array
-// Ejecutamos pasando los datos en un array
-$resultado = $query->execute([
-    'email'  => $email
-]);
-$usuario = $query->fetch(PDO::FETCH_ASSOC);
-if($usuario){
-    $verify = password_verify($pwd, $usuario['password']);
-    if($verify){
-        session_start();
-        $_SESSION['username'] = $usuario['email']; // Store session data
-        $_SESSION['id_usuario'] = $usuario['id_usuario'];
+        $resultado = $query->execute([
+            'email'  => $email
+        ]);
+        $usuario = $query->fetch(PDO::FETCH_ASSOC);
+        if($usuario){
+        $verify = password_verify($pwd, $usuario['password']);
+        if($verify){
+            session_start();
+            $_SESSION['username'] = $usuario['email']; // Store session data
+            $_SESSION['id_usuario'] = $usuario['id_usuario'];
+
+            $cookie_name = "id_usuario";
+            $cookie_value = $usuario['id_usuario'];
+            $expiry = time() + (86400 * 30); // Valid for 30 days
+            setcookie($cookie_name, $cookie_value, $expiry, "/");
+
+            header("Location: dashboard.php");
+            
+        }else{
+            echo "La contraseña esta mal...";
+        }
         
-        // Se eliminó el bloque de cookies
         
-        header("Location: dashboard.php");
-        
-    }else{
-        echo "La contraseña esta mal...";
-    }
-    
-}else{
-    echo "No se encontraron datos!";
-} 
+        }else{
+            echo "No se encontraron datos!";
+        }
 
         
 

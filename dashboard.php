@@ -2,9 +2,14 @@
 session_start();
 
 if (!isset($_SESSION['id_usuario'])) {
+  if (isset($_COOKIE['id_usuario'])) {
+    $_SESSION['id_usuario'] = $_COOKIE["id_usuario"];
+  } else {
     header("Location: index.php");
     exit();
+  }
 }
+
 ?>
 <!doctype html>
 <html lang="en">

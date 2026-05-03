@@ -3,3 +3,39 @@
   <input type="text" id="nombre" placeholder="Nombre del autor" class="form-control mb-3">
   <button type="button" onclick="guardarAutor()" class="btn btn-primary mt-2">Guardar</button>
 </form>
+
+<div>
+  <label class="form-label">Autor</label>
+  <input type="text" id="nombre" placeholder="Nombre del autor" class="form-control mb-3">
+  <button onclick="guardarAutor()" class="btn btn-primary mt-2">Guardar</button>
+</div>
+
+<script>
+function guardarAutor() {
+    const nombre = document.getElementById('nombre').value;
+    
+    if(nombre.trim() === "") {
+        alert("Por favor ingresa un nombre de autor");
+        return;
+    }
+    
+    fetch('autor.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `nombre=${encodeURIComponent(nombre)}`
+    })
+    .then(res => res.text())
+    .then(data => {
+        alert(data);
+        // ✅ LIMPIAR el campo después de guardar
+        document.getElementById('nombre').value = "";
+        // ✅ Opcional: enfocar el campo para el siguiente registro
+        document.getElementById('nombre').focus();
+    })
+    .catch(error => {
+        alert("Error al guardar: " + error);
+    });
+}
+</script>

@@ -20,8 +20,8 @@ if (isset($_SESSION['id_usuario'])) {
         $conn = conectarDB();
         $id = $_SESSION['id_usuario'];
         
-        // Ajusta "usuarios" y "nombre" según tu tabla
-        $sql = "SELECT nombre FROM usuarios WHERE id = :id";
+        // Consulta para obtener el nombre (funciona con tu tabla)
+        $sql = "SELECT nombre FROM usuarios WHERE id_usuario = :id";
         $stmt = $conn->prepare($sql);
         $stmt->execute(['id' => $id]);
         

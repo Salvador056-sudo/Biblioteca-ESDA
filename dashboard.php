@@ -10,29 +10,28 @@ if (!isset($_SESSION['id_usuario'])) {
   }
 }
 
-// Obtener datos del usuario (ajusta según tu tabla de usuarios)
-$nombre_usuario = ''; // Inicializar variable
+// Incluir la conexión a la BD
+require_once 'db.php';
+
+// Obtener el nombre del usuario desde la BD
+$nombre_usuario = '';
 if (isset($_SESSION['id_usuario'])) {
-    // Conexión a BD (asegúrate de tener tu conexión incluida)
-    // include 'conexion.php'; // Si tienes archivo de conexión
-    
-    // O si ya tienes la conexión en este archivo, asegúrate de tenerla
-    // Ejemplo genérico (ajusta según tu estructura)
-    /*
-    $sql = "SELECT nombre FROM usuarios WHERE id = " . $_SESSION['id_usuario'];
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $nombre_usuario = $row['nombre'];
-    }
-    */
-    
-    // Si solo tienes guardado el nombre en sesión, usa:
-    if (isset($_SESSION['nombre_usuario'])) {
-        $nombre_usuario = $_SESSION['nombre_usuario'];
-    } else {
-        // Si no tienes el nombre en sesión, usa solo el ID
-        $nombre_usuario = "Usuario ID: " . $_SESSION['id_usuario'];
+    try {
+        $conn = conectarDB();
+        $id = $_SESSION['id_usuario'];
+        
+        // Ajusta "usuarios" y "nombre" según tu tabla
+        $sql = "SELECT nombre FROM usuarios WHERE id = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        
+        if ($row = $stmt->fetch()) {
+            $nombre_usuario = $row['nombre'];
+        } else {
+            $nombre_usuario = "Usuario ID: " . $id;
+        }
+    } catch (PDOException $e) {
+        $nombre_usuario = "Error al obtener usuario";
     }
 }
 ?>

@@ -34,6 +34,13 @@ function guardarLibro() {
     .then(res => res.text())
     .then(data => {
         alert(data);
+        // ✅ LIMPIAR campos después de guardar
+        document.getElementById('titulo').value = "";
+        document.getElementById('autor_id').value = "";
+        document.getElementById('titulo').focus();
+    })
+    .catch(error => {
+        alert("Error al guardar: " + error);
     });
 }
 </script>
